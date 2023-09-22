@@ -4,7 +4,7 @@
 
     <h1>One Time Pad (OTP) </h1>
         
-    <form method="POST" action="/otp">
+    <form method="POST" action="/otp/encrypt">
         <label for="text">Texto Original:</label>
         <input type="text" id="text" name="text">
         <br>
@@ -15,11 +15,22 @@
     </form>
 
     <% if (etext) { %>
-    <h2>Texto Criptografado:</h2>
-    <p><%= etext %></p>
+        <h2>Texto Criptografado:</h2>
+        <p><%= etext %></p>
 
-    <h2>Texto Descriptografado:</h2>
-    <p><%= decryptedText %></p>
+        <form method="POST" action="/otp/decrypt">
+            <label for="etext">Texto Criptografado:</label>
+            <input type="text" id="etext" name="etext">
+            <br>
+            <label for="key">Chave OTP:</label>
+            <input type="text" id="key" name="key">
+            <br>
+            <button type="submit">Descriptografar</button>
+        </form>
+
+        <h2>Texto Descriptografado:</h2>
+        <p><%= decryptedText %></p>
+
     <% } %>
 
 <%- include('partials/footer') %>

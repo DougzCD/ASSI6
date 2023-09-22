@@ -1,14 +1,14 @@
 // Função para criptografar usando a Cifra de Hill
-function encryptHill(text, keyMatrix) {
-    if (typeof text !== 'string' || !Array.isArray(keyMatrix)) {
+function encryptHill(text, ekey) {
+    if (typeof text !== 'string' || !Array.isArray(ekey)) {
       throw new Error("O texto deve ser uma string e a chave deve ser uma matriz.");
     }
   
     const textLength = text.length;
-    const blockSize = keyMatrix.length;
+    const blockSize = ekey.length;
   
     // Verifica se a matriz chave é quadrada e tem o tamanho certo
-    if (keyMatrix.some(row => row.length !== blockSize) || keyMatrix.length !== blockSize) {
+    if (ekey.some(row => row.length !== blockSize) || ekey.length !== blockSize) {
       throw new Error("A matriz chave deve ser quadrada e ter o mesmo tamanho que o bloco de texto.");
     }
   
@@ -22,7 +22,7 @@ function encryptHill(text, keyMatrix) {
         blockVector.push(block.charCodeAt(j) - 97); // Assume que as letras são minúsculas e a = 0, b = 1, ...
       }
   
-      const encryptedBlockVector = multiplyMatrixVector(keyMatrix, blockVector);
+      const encryptedBlockVector = multiplyMatrixVector(ekey, blockVector);
       const encryptedBlock = encryptedBlockVector.map(num => String.fromCharCode((num % 26) + 97)).join('');
       encryptedBlocks.push(encryptedBlock);
     }
@@ -31,16 +31,16 @@ function encryptHill(text, keyMatrix) {
 }
   
   // Função para descriptografar usando a Cifra de Hill
-function decryptHill(etext, keyMatrix) {
-    if (typeof etext !== 'string' || !Array.isArray(keyMatrix)) {
+function decryptHill(etext, dkey) {
+    if (typeof etext !== 'string' || !Array.isArray(dkey)) {
       throw new Error("O texto criptografado deve ser uma string e a chave deve ser uma matriz.");
     }
   
     const textLength = etext.length;
-    const blockSize = keyMatrix.length;
+    const blockSize = dkey.length;
   
     // Verifica se a matriz chave é quadrada e tem o tamanho certo
-    if (keyMatrix.some(row => row.length !== blockSize) || keyMatrix.length !== blockSize) {
+    if (dkey.some(row => row.length !== blockSize) || dkey.length !== blockSize) {
       throw new Error("A matriz chave deve ser quadrada e ter o mesmo tamanho que o bloco de texto.");
     }
   
@@ -54,8 +54,8 @@ function decryptHill(etext, keyMatrix) {
         blockVector.push(block.charCodeAt(j) - 97); // Assume que as letras são minúsculas e a = 0, b = 1, ...
       }
   
-      const inverseKeyMatrix = inverseMatrix(keyMatrix);
-      const decryptedBlockVector = multiplyMatrixVector(inverseKeyMatrix, blockVector);
+      const inversedkey = inverseMatrix(dkey);
+      const decryptedBlockVector = multiplyMatrixVector(inversedkey, blockVector);
       const decryptedBlock = decryptedBlockVector.map(num => String.fromCharCode((num % 26) + 97)).join('');
       decryptedBlocks.push(decryptedBlock);
     }

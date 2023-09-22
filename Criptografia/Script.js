@@ -15,7 +15,6 @@ const { encryptHill, decryptHill } = require('./resources/criptog/hill');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(express.urlencoded({extended:true}));
-app.use(express.static('WEB_IFSP\public'));
 
 app.get('/',(req,res)=>{
     res.status(200).render('home');
@@ -25,18 +24,28 @@ app.get('/otp', (req, res) => {
     res.render('otp.ejs', { etext: null, decryptedText: null });
 });
 
-app.post('/otp', (req, res) => {
+app.post('/otp/encrypt', (req, res) => {
     const text = req.body.text;
     const key = req.body.key;
 
     try {
         const etext = encryptOTP(text, key);
-        const decryptedText = decryptOTP(etext, key);
-
-        res.render('otp.ejs', { etext, decryptedText });
+        res.render('otp.ejs', { etext, decryptedText: null });
     } catch (error) {
         res.status(500).send('Erro ao criptografar o texto.');
     }
+});
+
+app.post('/otp/decrypt', (req, res) => {
+  const etext = req.body.etext;
+  const key = req.body.key;
+
+  try {
+    const decryptedText = decryptOTP(etext, key);
+    res.render('cesar.ejs', { etext, decryptedText });
+  } catch (error) {
+    res.status(500).send('Erro ao descriptografar o texto.');
+  }
 });
 
 app.get('/cesar', (req, res) => {
@@ -105,8 +114,8 @@ app.post('/hill/encrypt', (req, res) => {
   
     try {
       // Converte a matriz chave fornecida como uma string em uma matriz numérica
-      const keyMatrix = key.split('\n').map(row => row.split(',').map(Number));
-      const etext = encryptHill(text, keyMatrix);
+      const ekey = key.split('\n').map(row => row.split(',').map(Number));
+      const etext = encryptHill(text, ekey);
       res.render('hill.ejs', { etext, decryptedText: null });
     } catch (error) {
       res.status(500).send('Erro ao criptografar o texto.');
@@ -119,8 +128,8 @@ app.post('/hill/decrypt', (req, res) => {
   
     try {
       // Converte a matriz chave fornecida como uma string em uma matriz numérica
-      const keyMatrix = key.split('\n').map(row => row.split(',').map(Number));
-      const decryptedText = decryptHill(etext, keyMatrix);
+      const dkey = key.split('\n').map(row => row.split(',').map(Number));
+      const decryptedText = decryptHill(etext, dkey);
       res.render('hill.ejs', { etext, decryptedText });
     } catch (error) {
       res.status(500).send('Erro ao descriptografar o texto.');
