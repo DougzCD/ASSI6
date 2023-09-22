@@ -129,11 +129,9 @@ app.post('/hill/decrypt', (req, res) => {
 
 app.get('*:pagina',(req,res)=>{
 
-    let {pagina} = req.params;
+  let {pagina} = req.params;
 
-    console.log(pagina);
-       
-    res.status(200).render('erro', {pagina});
+  res.status(200).render('erro', {pagina});
        
 })
 
