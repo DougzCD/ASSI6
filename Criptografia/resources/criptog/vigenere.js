@@ -1,16 +1,16 @@
 // vigenere.js
 
-function encryptVigenere(plainText, key) {
+function encryptVigenere(text, key) {
 
-    if (typeof plainText !== 'string' || typeof key !== 'string') {
+    if (typeof text !== 'string' || typeof key !== 'string') {
         throw new Error("O texto e a chave devem ser strings.");
     }
     
     const keyLength = key.length;
-    let encryptedText = '';
+    let etext = '';
     
-    for (let i = 0; i < plainText.length; i++) {
-        const plainChar = plainText[i];
+    for (let i = 0; i < text.length; i++) {
+        const plainChar = text[i];
         const keyChar = key[i % keyLength]; // Usa uma chave circular para corresponder ao texto
     
         if (plainChar.match(/[a-zA-Z]/)) {
@@ -21,27 +21,27 @@ function encryptVigenere(plainText, key) {
           const keyShift = keyChar.charCodeAt(0) - offset;
           const encryptedCharCode = ((plainCharCode - offset + keyShift) % 26) + offset;
     
-          encryptedText += String.fromCharCode(encryptedCharCode);
+          etext += String.fromCharCode(encryptedCharCode);
         } else {
-          encryptedText += plainChar;
+          etext += plainChar;
         }
     }
     
-    return encryptedText;
+    return etext;
 }
   
-function decryptVigenere(encryptedText, key) {
+function decryptVigenere(etext, key) {
 
-    if (typeof encryptedText !== 'string' || typeof key !== 'string') {
+    if (typeof etext !== 'string' || typeof key !== 'string') {
       throw new Error("O texto criptografado e a chave devem ser strings.");
     }
   
     const keyLength = key.length;
     let decryptedText = '';
   
-    for (let i = 0; i < encryptedText.length; i++) {
+    for (let i = 0; i < etext.length; i++) {
 
-      const encryptedChar = encryptedText[i];
+      const encryptedChar = etext[i];
       const keyChar = key[i % keyLength]; // Usa uma chave circular para corresponder ao texto
   
       if (encryptedChar.match(/[a-zA-Z]/)) {

@@ -1,10 +1,10 @@
 // Função para criptografar usando a Cifra de Hill
-function encryptHill(plainText, keyMatrix) {
-    if (typeof plainText !== 'string' || !Array.isArray(keyMatrix)) {
+function encryptHill(text, keyMatrix) {
+    if (typeof text !== 'string' || !Array.isArray(keyMatrix)) {
       throw new Error("O texto deve ser uma string e a chave deve ser uma matriz.");
     }
   
-    const textLength = plainText.length;
+    const textLength = text.length;
     const blockSize = keyMatrix.length;
   
     // Verifica se a matriz chave é quadrada e tem o tamanho certo
@@ -15,7 +15,7 @@ function encryptHill(plainText, keyMatrix) {
     const encryptedBlocks = [];
   
     for (let i = 0; i < textLength; i += blockSize) {
-      const block = plainText.slice(i, i + blockSize);
+      const block = text.slice(i, i + blockSize);
       const blockVector = [];
   
       for (let j = 0; j < blockSize; j++) {
@@ -31,12 +31,12 @@ function encryptHill(plainText, keyMatrix) {
 }
   
   // Função para descriptografar usando a Cifra de Hill
-function decryptHill(encryptedText, keyMatrix) {
-    if (typeof encryptedText !== 'string' || !Array.isArray(keyMatrix)) {
+function decryptHill(etext, keyMatrix) {
+    if (typeof etext !== 'string' || !Array.isArray(keyMatrix)) {
       throw new Error("O texto criptografado deve ser uma string e a chave deve ser uma matriz.");
     }
   
-    const textLength = encryptedText.length;
+    const textLength = etext.length;
     const blockSize = keyMatrix.length;
   
     // Verifica se a matriz chave é quadrada e tem o tamanho certo
@@ -47,7 +47,7 @@ function decryptHill(encryptedText, keyMatrix) {
     const decryptedBlocks = [];
   
     for (let i = 0; i < textLength; i += blockSize) {
-      const block = encryptedText.slice(i, i + blockSize);
+      const block = etext.slice(i, i + blockSize);
       const blockVector = [];
   
       for (let j = 0; j < blockSize; j++) {

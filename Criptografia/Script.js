@@ -22,106 +22,106 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/otp', (req, res) => {
-    res.render('otp.ejs', { encryptedText: null, decryptedText: null });
+    res.render('otp.ejs', { etext: null, decryptedText: null });
 });
 
 app.post('/otp', (req, res) => {
-    const plaintext = req.body.plaintext;
+    const text = req.body.text;
     const key = req.body.key;
 
     try {
-        const encryptedText = encryptOTP(plaintext, key);
-        const decryptedText = decryptOTP(encryptedText, key);
+        const etext = encryptOTP(text, key);
+        const decryptedText = decryptOTP(etext, key);
 
-        res.render('otp.ejs', { encryptedText, decryptedText });
+        res.render('otp.ejs', { etext, decryptedText });
     } catch (error) {
         res.status(500).send('Erro ao criptografar o texto.');
     }
 });
 
 app.get('/cesar', (req, res) => {
-    res.render('cesar.ejs', { encryptedText: null, decryptedText: null });
+    res.render('cesar.ejs', { etext: null, decryptedText: null });
 });
 
 app.post('/cesar/encrypt', (req, res) => {
-    const plaintext = req.body.plaintext;
+    const text = req.body.text;
     const shift = parseInt(req.body.shift);
   
     try {
-      const encryptedText = encryptCaesar(plaintext, shift);
-      res.render('cesar.ejs', { encryptedText, decryptedText: null });
+      const etext = encryptCaesar(text, shift);
+      res.render('cesar.ejs', { etext, decryptedText: null });
     } catch (error) {
       res.status(500).send('Erro ao criptografar o texto.');
     }
 });
 
 app.post('/cesar/decrypt', (req, res) => {
-    const encryptedText = req.body.encryptedText;
+    const etext = req.body.etext;
     const shift = parseInt(req.body.shift);
   
     try {
-      const decryptedText = decryptCaesar(encryptedText, shift);
-      res.render('cesar.ejs', { encryptedText, decryptedText });
+      const decryptedText = decryptCaesar(etext, shift);
+      res.render('cesar.ejs', { etext, decryptedText });
     } catch (error) {
       res.status(500).send('Erro ao descriptografar o texto.');
     }
 });
 
 app.get('/vigenere', (req, res) => {
-    res.render('vigenere.ejs', { encryptedText: null, decryptedText: null });
+    res.render('vigenere.ejs', { etext: null, decryptedText: null });
 });
 
 app.post('/vigenere/encrypt', (req, res) => {
-    const plaintext = req.body.plaintext;
+    const text = req.body.text;
     const key = req.body.key;
   
     try {
-      const encryptedText = encryptVigenere(plaintext, key);
-      res.render('vigenere.ejs', { encryptedText, decryptedText: null });
+      const etext = encryptVigenere(text, key);
+      res.render('vigenere.ejs', { etext, decryptedText: null });
     } catch (error) {
       res.status(500).send('Erro ao criptografar o texto.');
     }
 });
 
 app.post('/vigenere/decrypt', (req, res) => {
-    const encryptedText = req.body.encryptedText;
+    const etext = req.body.etext;
     const key = req.body.key;
   
     try {
-      const decryptedText = decryptVigenere(encryptedText, key);
-      res.render('vigenere.ejs', { encryptedText, decryptedText });
+      const decryptedText = decryptVigenere(etext, key);
+      res.render('vigenere.ejs', { etext, decryptedText });
     } catch (error) {
       res.status(500).send('Erro ao descriptografar o texto.');
     }
 });
 
 app.get('/hill', (req, res) => {
-    res.render('hill.ejs', { encryptedText: null, decryptedText: null });
+    res.render('hill.ejs', { etext: null, decryptedText: null });
 });
 
 app.post('/hill/encrypt', (req, res) => {
-    const plaintext = req.body.plaintext;
+    const text = req.body.text;
     const key = req.body.key;
   
     try {
       // Converte a matriz chave fornecida como uma string em uma matriz numérica
       const keyMatrix = key.split('\n').map(row => row.split(',').map(Number));
-      const encryptedText = encryptHill(plaintext, keyMatrix);
-      res.render('hill.ejs', { encryptedText, decryptedText: null });
+      const etext = encryptHill(text, keyMatrix);
+      res.render('hill.ejs', { etext, decryptedText: null });
     } catch (error) {
       res.status(500).send('Erro ao criptografar o texto.');
     }
 });
 
 app.post('/hill/decrypt', (req, res) => {
-    const encryptedText = req.body.encryptedText;
+    const etext = req.body.etext;
     const key = req.body.key;
   
     try {
       // Converte a matriz chave fornecida como uma string em uma matriz numérica
       const keyMatrix = key.split('\n').map(row => row.split(',').map(Number));
-      const decryptedText = decryptHill(encryptedText, keyMatrix);
-      res.render('hill.ejs', { encryptedText, decryptedText });
+      const decryptedText = decryptHill(etext, keyMatrix);
+      res.render('hill.ejs', { etext, decryptedText });
     } catch (error) {
       res.status(500).send('Erro ao descriptografar o texto.');
     }

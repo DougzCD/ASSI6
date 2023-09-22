@@ -1,10 +1,10 @@
 
-function encryptCaesar(plainText, shift) {
-    if (typeof plainText !== 'string' || typeof shift !== 'number') {
+function encryptCaesar(text, shift) {
+    if (typeof text !== 'string' || typeof shift !== 'number') {
       throw new Error("O texto deve ser uma string e o deslocamento deve ser um número.");
     }
   
-    const encryptedText = plainText
+    const etext = text
       .split('')
       .map(char => {
         if (char.match(/[a-zA-Z]/)) {
@@ -18,15 +18,15 @@ function encryptCaesar(plainText, shift) {
       })
       .join('');
   
-    return encryptedText;
+    return etext;
 }
   
-function decryptCaesar(encryptedText, shift) {
-    if (typeof encryptedText !== 'string' || typeof shift !== 'number') {
+function decryptCaesar(etext, shift) {
+    if (typeof etext !== 'string' || typeof shift !== 'number') {
       throw new Error("O texto criptografado deve ser uma string e o deslocamento deve ser um número.");
     }
   
-    const decryptedText = encryptedText
+    const decryptedText = etext
       .split('')
       .map(char => {
         if (char.match(/[a-zA-Z]/)) {
