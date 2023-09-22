@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+   
+<%- include('partials/navbar') %>
+
+    <h1>Cifra de Vigenère</h1>
+        
+    <form method="POST" action="/vigenere/encrypt">
+        <label for="plaintext">Texto Original:</label>
+        <input type="text" id="plaintext" name="plaintext">
+        <br>
+        <label for="key">Chave:</label>
+        <input type="text" id="key" name="key">
+        <br>
+        <button type="submit">Criptografar</button>
+    </form>
+
+    <% if (encryptedText) { %>
+        <h2>Texto Criptografado:</h2>
+        <p><%= encryptedText %></p>
+
+        <form method="POST" action="/vigenere/decrypt">
+            <label for="encryptedText">Texto Criptografado:</label>
+            <input type="text" id="encryptedText" name="encryptedText">
+            <br>
+            <label for="key">Chave:</label>
+            <input type="text" id="key" name="key">
+            <br>
+            <button type="submit">Descriptografar</button>
+        </form>
+
+        <h2>Texto Descriptografado:</h2>
+        <p><%= decryptedText %></p>
+    <% } %>
+
+<%- include('partials/footer') %>

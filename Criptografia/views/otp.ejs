@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+   
+<%- include('partials/navbar') %>
+
+    <h1>One Time Pad (OTP) Encryption</h1>
+        
+    <form method="POST" action="/otp">
+        <label for="plaintext">Texto Original:</label>
+        <input type="text" id="plaintext" name="plaintext">
+        <br>
+        <label for="key">Chave OTP:</label>
+        <input type="text" id="key" name="key">
+        <br>
+        <button type="submit">Criptografar</button>
+    </form>
+
+    <% if (encryptedText) { %>
+    <h2>Texto Criptografado:</h2>
+    <p><%= encryptedText %></p>
+
+    <h2>Texto Descriptografado:</h2>
+    <p><%= decryptedText %></p>
+    <% } %>
+
+<%- include('partials/footer') %>
